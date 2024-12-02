@@ -31,12 +31,12 @@ opt = parser.parse_args()
 print(opt)
 
 def main():
-    train_data = pickle.load(open('/root/GC-SAN_master/datasets/' + opt.dataset + '/train_10.txt', 'rb'))
+    train_data = pickle.load(open('/root/GC-SAN_master/datasets/' + opt.dataset + '/train.txt', 'rb'))
     if opt.validation:
         train_data, valid_data = split_validation(train_data, opt.valid_portion)
         test_data = valid_data
     else:
-        test_data = pickle.load(open('../datasets/' + opt.dataset + '/test_10.txt', 'rb'))
+        test_data = pickle.load(open('../datasets/' + opt.dataset + '/test.txt', 'rb'))
 
     print(f"Размер выборки для тренировки: {len(train_data)}")
     if len(train_data) == 0:
