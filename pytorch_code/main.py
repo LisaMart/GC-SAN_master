@@ -30,7 +30,6 @@ parser.add_argument('--dynamic', type=bool, default=False)
 opt = parser.parse_args()
 print(opt)
 
-
 def main():
     train_data = pickle.load(open('/root/GC-SAN_master/datasets/' + opt.dataset + '/train_10.txt', 'rb'))
     if opt.validation:
@@ -80,7 +79,6 @@ def main():
     print('-------------------------------------------------------')
     end = time.time()
     print("Run time: %f s" % (end - start))
-
 
 if __name__ == '__main__':
     main()

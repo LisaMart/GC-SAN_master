@@ -15,7 +15,6 @@ from torch.nn import Module, Parameter
 import torch.nn.functional as F
 from torchsummary import summary
 
-
 class PositionEmbedding(nn.Module):
 
     MODE_EXPAND = 'MODE_EXPAND'
@@ -170,7 +169,6 @@ class GNN(Module):
             hidden = self.GNNCell(A, hidden)
         return hidden
 
-
 class SessionGraph(Module):
     def __init__(self, opt, n_node, len_max):
         super(SessionGraph, self).__init__()
@@ -193,7 +191,6 @@ class SessionGraph(Module):
         self.optimizer = torch.optim.Adam(self.parameters(), lr=opt.lr, weight_decay=opt.l2)
         self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=opt.lr_dc_step, gamma=opt.lr_dc)
         self.reset_parameters()
-
 
     def reset_parameters(self):
         stdv = 1.0 / math.sqrt(self.hidden_size)
@@ -236,20 +233,17 @@ class SessionGraph(Module):
         hidden = self.gnn(A, hidden)
         return hidden
 
-
 def trans_to_cuda(variable):
     if torch.cuda.is_available():
         return variable.cuda()
     else:
         return variable
 
-
 def trans_to_cpu(variable):
     if torch.cuda.is_available():
         return variable.cpu()
     else:
         return variable
-
 
 def forward(model, i, data):
     alias_inputs, A, items, mask, targets = data.get_slice(i)
@@ -265,7 +259,6 @@ def forward(model, i, data):
     # 加上 position encoding
     # seq_hidden = model.pe(seq_hidden)
     return targets, model.compute_scores(seq_hidden, mask)
-
 
 def train_test(model, train_data, test_data):
     model.scheduler.step()
@@ -301,8 +294,5 @@ def train_test(model, train_data, test_data):
                 mrr.append(1 / (np.where(score == target - 1)[0][0] + 1))
     hit = np.mean(hit) * 100
     mrr = np.mean(mrr) * 100
-<<<<<<< HEAD
+
     return hit, mrr
-=======
-    return hit, mrr
->>>>>>> 3db167ede9be318908d153413e7135c622a0bf28
