@@ -38,6 +38,8 @@ def main():
     else:
         test_data = pickle.load(open('../datasets/' + opt.dataset + '/test.txt', 'rb'))
 
+    print(f"Размер выборки для тренировки: {len(train_data)}")
+
     # all_train_seq = pickle.load(open('../datasets/' + opt.dataset + '/all_train_seq.txt', 'rb'))
     # g = build_graph(all_train_seq)
     train_data = Data(train_data, shuffle=True, opt=opt)
