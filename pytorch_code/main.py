@@ -32,20 +32,13 @@ print(opt)
 
 
 def main():
-<<<<<<< HEAD
     train_data = pickle.load(open('/root/GC-SAN_master/datasets/' + opt.dataset + '/train_10.txt', 'rb'))
-=======
-    train_data = pickle.load(open('../datasets/' + opt.dataset + '/train.txt', 'rb'))
->>>>>>> 3db167ede9be318908d153413e7135c622a0bf28
     if opt.validation:
         train_data, valid_data = split_validation(train_data, opt.valid_portion)
         test_data = valid_data
     else:
-<<<<<<< HEAD
         test_data = pickle.load(open('../datasets/' + opt.dataset + '/test_10.txt', 'rb'))
-=======
-        test_data = pickle.load(open('../datasets/' + opt.dataset + '/test.txt', 'rb'))
->>>>>>> 3db167ede9be318908d153413e7135c622a0bf28
+
     # all_train_seq = pickle.load(open('../datasets/' + opt.dataset + '/all_train_seq.txt', 'rb'))
     # g = build_graph(all_train_seq)
     train_data = Data(train_data, shuffle=True, opt=opt)
@@ -90,8 +83,4 @@ def main():
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     main()
-=======
-    main()
->>>>>>> 3db167ede9be318908d153413e7135c622a0bf28
