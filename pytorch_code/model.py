@@ -247,19 +247,26 @@ def trans_to_cpu(variable):
     else:
         return variable
 
+
 def forward(model, i, data):
     alias_inputs, A, items, mask, targets = data.get_slice(i)
+
+    # Преобразуем в numpy массив перед созданием тензора
+    alias_inputs = np.array(alias_inputs)  # Преобразуем в numpy
+    items = np.array(items)  # Преобразуем в numpy
+    A = np.array(A)  # Преобразуем в numpy
+    mask = np.array(mask)  # Преобразуем в numpy
+
+    # Затем создаем тензор
     alias_inputs = trans_to_cuda(torch.Tensor(alias_inputs).long())
     items = trans_to_cuda(torch.Tensor(items).long())
     A = trans_to_cuda(torch.Tensor(A).float())
     mask = trans_to_cuda(torch.Tensor(mask).long())
-    # summary has an embedding bug - https://github.com/jiangxiluning/pytorch-summary
-    # summary(model, [(items.cpu().numpy().shape), (A.cpu().numpy().shape)])  # print model summary
+
+    # Дальше продолжаем как обычно
     hidden = model(items, A)
     get = lambda i: hidden[i][alias_inputs[i]]
     seq_hidden = torch.stack([get(i) for i in torch.arange(len(alias_inputs)).long()])
-    # 加上 position encoding
-    # seq_hidden = model.pe(seq_hidden)
     return targets, model.compute_scores(seq_hidden, mask)
 
 def train_test(model, train_data, test_data):

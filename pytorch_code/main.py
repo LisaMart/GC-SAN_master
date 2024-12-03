@@ -11,6 +11,7 @@ import pickle
 import time
 from utils import build_graph, Data, split_validation
 from model import *
+import numpy as np
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', default='diginetica', help='dataset name: diginetica/yoochoose1_4/yoochoose1_64/sample')
@@ -40,11 +41,10 @@ def main():
 
     print(f"Размер выборки для тренировки: {len(train_data)}")
 
-    # all_train_seq = pickle.load(open('../datasets/' + opt.dataset + '/all_train_seq.txt', 'rb'))
-    # g = build_graph(all_train_seq)
-    train_data = Data(train_data, shuffle=True, opt=opt)
-    test_data = Data(test_data, shuffle=False, opt=opt)
-    # del all_train_seq, g
+    # Преобразуем данные в numpy массивы перед использованием в Data
+    train_data = np.array(train_data)  # добавляем np.array()
+    test_data = np.array(test_data)  # добавляем np.array()
+
     if opt.dataset == 'diginetica':
         n_node = 43098
     elif opt.dataset == 'yoochoose1_64' or opt.dataset == 'yoochoose1_4':

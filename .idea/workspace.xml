@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="55867785-8c36-4b07-bf51-1164451026fb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pytorch_code/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/pytorch_code/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pytorch_code/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/pytorch_code/model.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +70,7 @@
       <updated>1732796474653</updated>
       <workItem from="1732796475832" duration="1613000" />
       <workItem from="1733111760546" duration="6434000" />
-      <workItem from="1733240007860" duration="816000" />
+      <workItem from="1733240007860" duration="1529000" />
     </task>
     <servers />
   </component>
