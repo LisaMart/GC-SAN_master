@@ -263,7 +263,6 @@ def forward(model, i, data):
     return targets, model.compute_scores(seq_hidden, mask)
 
 def train_test(model, train_data, test_data):
-    model.scheduler.step()
     print('start training: ', datetime.datetime.now())
     model.train()
     total_loss = 0.0
@@ -274,7 +273,8 @@ def train_test(model, train_data, test_data):
         targets = trans_to_cuda(torch.Tensor(targets).long())
         loss = model.loss_function(scores, targets - 1)
         loss.backward()
-        model.optimizer.step()
+        model.optimizer.step()  # Сначала обновляем параметры модели
+        model.scheduler.step()  # Потом обновляем learning rate
         total_loss += loss
         if j % int(len(slices) / 5 + 1) == 0:
             print('[%d/%d] Loss: %.4f' % (j, len(slices), loss.item()))
