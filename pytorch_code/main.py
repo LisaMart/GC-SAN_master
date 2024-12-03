@@ -41,9 +41,8 @@ def main():
 
     print(f"Размер выборки для тренировки: {len(train_data)}")
 
-    # Преобразуем данные в numpy массивы перед использованием в Data
-    train_data = np.array(train_data)  # добавляем np.array()
-    test_data = np.array(test_data)  # добавляем np.array()
+    train_data = Data(train_data, shuffle=True, opt=opt)
+    test_data = Data(test_data, shuffle=False, opt=opt)
 
     if opt.dataset == 'diginetica':
         n_node = 43098

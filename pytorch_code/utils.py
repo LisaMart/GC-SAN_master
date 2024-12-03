@@ -51,12 +51,12 @@ class Data():
     def __init__(self, data, shuffle=False, graph=None, opt=None):
         inputs = data[0]
         inputs, mask, len_max = data_masks(inputs, [0])
-        self.inputs = np.array(inputs)  # Преобразовано в np.array()
-        self.mask = np.array(mask)  # Преобразовано в np.array()
+        self.inputs = np.asarray(inputs)
+        self.mask = np.asarray(mask)
         self.len_max = len_max
-        self.targets = np.array(data[1])  # Преобразовано в np.array()
+        self.targets = np.asarray(data[1])
         if opt.dynamic:
-            self.targets = np.array(data[2])  # Преобразовано в np.array()
+            self.targets = np.asarray(data[2])
         self.length = len(inputs)
         self.shuffle = shuffle
         self.graph = graph
