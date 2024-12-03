@@ -15,6 +15,8 @@ from torch.nn import Module, Parameter
 import torch.nn.functional as F
 from torchsummary import summary
 
+K = 20
+
 class PositionEmbedding(nn.Module):
 
     MODE_EXPAND = 'MODE_EXPAND'
@@ -280,19 +282,20 @@ def train_test(model, train_data, test_data):
 
     print('start predicting: ', datetime.datetime.now())
     model.eval()
-    hit, mrr = [], []
+    precision, mrr = [], []
     slices = test_data.generate_batch(model.batch_size)
     for i in slices:
         targets, scores = forward(model, i, test_data)
-        sub_scores = scores.topk(20)[1]
+        sub_scores = scores.topk(K)[1]
         sub_scores = trans_to_cpu(sub_scores).detach().numpy()
         for score, target, mask in zip(sub_scores, targets, test_data.mask):
-            hit.append(np.isin(target - 1, score))
+            precision_at_k = np.isin(target - 1, score).sum() / K # Precision@K
+            precision.append(precision_at_k)  # добавляем в список Precision@K
             if len(np.where(score == target - 1)[0]) == 0:
                 mrr.append(0)
             else:
                 mrr.append(1 / (np.where(score == target - 1)[0][0] + 1))
-    hit = np.mean(hit) * 100
-    mrr = np.mean(mrr) * 100
+    precision_at_k_mean = np.mean(precision) * 100
+    mrr_mean = np.mean(mrr) * 100
 
-    return hit, mrr
+    return precision_at_k_mean, mrr_mean

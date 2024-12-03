@@ -63,18 +63,18 @@ def main():
     for epoch in range(opt.epoch):
         print('-------------------------------------------------------')
         print('epoch: ', epoch)
-        hit, mrr = train_test(model, train_data, test_data)
+        precision_at_k_mean, mrr_mean = train_test(model, train_data, test_data)
         flag = 0
-        if hit >= best_result[0]:
-            best_result[0] = hit
+        if precision_at_k_mean >= best_result[0]:
+            best_result[0] = precision_at_k_mean
             best_epoch[0] = epoch
             flag = 1
-        if mrr >= best_result[1]:
-            best_result[1] = mrr
+        if mrr_mean >= best_result[1]:
+            best_result[1] = mrr_mean
             best_epoch[1] = epoch
             flag = 1
         print('Best Result:')
-        print('\tRecall@20:\t%.4f\tMMR@20:\t%.4f\tEpoch:\t%d,\t%d'% (best_result[0], best_result[1], best_epoch[0], best_epoch[1]))
+        print(f'\tPrecision@{K}:\t{best_result[0]:.4f}\tMMR@{K}:\t{best_result[1]:.4f}\tEpoch:\t{best_epoch[0]},{best_epoch[1]}')
         bad_counter += 1 - flag
         if bad_counter >= opt.patience:
             break
