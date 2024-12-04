@@ -62,7 +62,7 @@ def main():
     bad_counter = 0
     for epoch in range(opt.epoch):
         print('-------------------------------------------------------')
-        print(f'epoch:  {epoch}/{opt.epoch}')
+        print(f'epoch:  {epoch}/{opt.epoch-1}')
         precision_at_k_mean, mrr_mean = train_test(model, train_data, test_data)
         flag = 0
         if precision_at_k_mean >= best_result[0]:
