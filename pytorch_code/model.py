@@ -15,7 +15,7 @@ from torch.nn import Module, Parameter
 import torch.nn.functional as F
 from torchsummary import summary
 
-K = 20
+K = 10
 
 class PositionEmbedding(nn.Module):
 
